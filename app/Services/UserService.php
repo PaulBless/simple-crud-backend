@@ -292,15 +292,8 @@ class UserService implements UserContract
      */
     private function createPasswordResetToken(string $email)
     {
-        $result = DB::table('password_resets')->where('email', $email)->first();
-
-        if ($result) {
-            return [
-                'message' => 'Token found',
-                'payload' => $result->token,
-                'status'  => Constants::STATUS_CODE_SUCCESS
-            ];
-        }
+        //delete existing tokens
+        $this->deletePasswordResetToken($email);
 
         $token = Str::random(80);;
         $result = $this->savePasswordResetToken($token, $email);
@@ -370,7 +363,7 @@ class UserService implements UserContract
             }
             
             //delete token
-            $this->deletePasswordResetToken($data['token'], $data['email']);
+            $this->deletePasswordResetToken($data['email']);
 
             //reset password
             return $this->resetPassword($user, $data['password']);
@@ -421,12 +414,10 @@ class UserService implements UserContract
      * @param string $email 
      * @return array
      */
-    private function deletePasswordResetToken(string $token, string $email)
+    private function deletePasswordResetToken(string $email)
     {
         DB::table('password_resets')
-                ->where('token', $token)
                 ->where('email', $email)
-                ->where('created_at', '>', Carbon::now()->subHours(1))
                 ->delete();
 
         return [
