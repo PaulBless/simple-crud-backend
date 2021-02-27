@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'v1', 'middleware' => ['throttle:30,1']], function () { //max 30 request in i min
+
+Route::group(['prefix' => 'v1'], function () {
     Route::get('/status', function () {
         return response()->json([
             'message' => 'Running',
@@ -22,6 +23,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['throttle:30,1']], function () 
             'status'  => Constants::STATUS_CODE_SUCCESS
         ]);
     });
-    Route::post('/login', ['App\Http\Controllers\Api\AuthController', 'login']);
-    Route::post('/registration', ['App\Http\Controllers\Api\AuthController', 'registration']);
+
+    //auth
+    Route::group(['middleware' => ['throttle:30,1']], function () { //max 30 request in i min
+        Route::post('/login', ['App\Http\Controllers\Api\AuthController', 'login']);
+        Route::post('/registration', ['App\Http\Controllers\Api\AuthController', 'registration']);
+        Route::post('/forget-password', ['App\Http\Controllers\Api\AuthController', 'forgetPassword']);
+        Route::post('/reset-password', ['App\Http\Controllers\Api\AuthController', 'resetPassword']);
+    });
 });

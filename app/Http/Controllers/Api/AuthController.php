@@ -51,4 +51,32 @@ class AuthController extends Controller
 
         return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
     }
+
+    /**
+     * Handle forget password
+     * 
+     * @param Request $request 
+     * @return JsonResponse 
+     * @throws BindingResolutionException 
+     */
+    public function forgetPassword(Request $request)
+    {
+        $result = $this->user->handleForgetPassword($request->all());
+
+        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+    }
+
+    /**
+     * Handle reset password
+     * 
+     * @param Request $request 
+     * @return JsonResponse 
+     * @throws BindingResolutionException 
+     */
+    public function resetPassword(Request $request)
+    {
+        $result = $this->user->handleResetPassword($request->all());
+
+        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+    }
 }
