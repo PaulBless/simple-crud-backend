@@ -14,5 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response()->json([
+        'message' => 'Running',
+        'payload' => null,
+        'status'  => Constants::STATUS_CODE_SUCCESS
+    ]);
 });
+
+//log viewer
+Route::get('system-logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index']);

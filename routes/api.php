@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1', 'middleware' => ['throttle:30,1']], function () { //max 30 request in i min
+    Route::get('/status', function () {
+        return response()->json([
+            'message' => 'Running',
+            'payload' => null,
+            'status'  => Constants::STATUS_CODE_SUCCESS
+        ]);
+    });
+    Route::post('/login', ['App\Http\Controllers\Api\AuthController', 'login']);
+    Route::post('/registration', ['App\Http\Controllers\Api\AuthController', 'registration']);
 });
