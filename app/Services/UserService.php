@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Hash;
-use Illuminate\Auth\Events\PasswordReset;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use App\Services\Contracts\UserContract;
@@ -11,8 +10,6 @@ use Auth;
 use Carbon\Carbon;
 use Constants;
 use DB;
-use Exception;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use InvalidArgumentException;
 use Log;
 use Str;
@@ -49,7 +46,7 @@ class UserService implements UserContract
     }
 
     /**
-     * Handle login and returns the authenticated user
+     * Handle login
      * 
      * @param array $data 
      * @return array 
@@ -75,12 +72,17 @@ class UserService implements UserContract
             $credentials['password'] = $data['password'];
 
             if ($token = $this->guard()->attempt($credentials)) {
+                $tokenDetails = [
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => $this->guard()->factory()->getTTL() * 60
+                ];
+
                 return [
                     'message' => 'Successfully logged in',
                     'payload' => [
-                        'access_token' => $token,
-                        'token_type' => 'bearer',
-                        'expires_in' => $this->guard()->factory()->getTTL() * 60
+                        'user' => $this->guard()->user(),
+                        'token' => $tokenDetails
                     ],
                     'status'  => Constants::STATUS_CODE_SUCCESS
                 ];
@@ -102,13 +104,13 @@ class UserService implements UserContract
     }
 
     /**
-     * Handle registration
+     * Handle signup
      * 
      * @param array $data 
      * @return array 
      * @throws InvalidArgumentException 
      */
-    public function handleRegistration(array $data)
+    public function handleSignup(array $data)
     {
         try {
             $validate = Validator::make($data, [
@@ -138,13 +140,18 @@ class UserService implements UserContract
             }
 
             $token = $this->guard()->login($user);
+
+            $tokenDetails = [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => $this->guard()->factory()->getTTL() * 60
+            ];
             
             return [
-                'message' => 'Registration successful',
+                'message' => 'Signup is successful',
                 'payload' => [
-                    'access_token' => $token,
-                    'token_type' => 'bearer',
-                    'expires_in' => $this->guard()->factory()->getTTL() * 60
+                    'user' => $this->guard()->user(),
+                    'token' => $tokenDetails
                 ],
                 'status'  => Constants::STATUS_CODE_SUCCESS
             ];

@@ -2,12 +2,10 @@
 
 namespace App\Services\Contracts;
 
-use Illuminate\Http\Request;
-
 interface UserContract
 {
     /**
-     * Handle login and returns the authenticated user
+     * Handle login
      * 
      * @param array $data 
      * @return array 
@@ -16,13 +14,13 @@ interface UserContract
     public function handleLogin(array $data);
 
     /**
-     * Handle registration
+     * Handle signup
      * 
      * @param array $data 
      * @return array 
      * @throws InvalidArgumentException 
      */
-    public function handleRegistration(array $data);
+    public function handleSignup(array $data);
 
     /**
      * Fetch data by email

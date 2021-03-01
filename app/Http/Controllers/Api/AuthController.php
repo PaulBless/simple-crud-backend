@@ -39,15 +39,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle registration
+     * Handle signup
      * 
      * @param Request $request 
      * @return JsonResponse 
      * @throws BindingResolutionException 
      */
-    public function registration(Request $request)
+    public function signup(Request $request)
     {
-        $result = $this->user->handleRegistration($request->all());
+        $result = $this->user->handleSignup($request->all());
 
         return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
     }
