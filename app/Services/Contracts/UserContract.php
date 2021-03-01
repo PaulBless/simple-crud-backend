@@ -48,4 +48,18 @@ interface UserContract
      * @throws InvalidArgumentException 
      */
     public function handleResetPassword(array $data);
+
+    /**
+     * Get the authenticated User
+     *
+     * @return JsonResponse
+     */
+    public function me();
+
+    /**
+     * Refresh a token
+     *
+     * @return JsonResponse
+     */
+    public function refreshToken();
 }

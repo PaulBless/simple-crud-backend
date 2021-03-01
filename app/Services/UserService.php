@@ -452,4 +452,42 @@ class UserService implements UserContract
             'status'  => Constants::STATUS_CODE_SUCCESS
         ];
     }
+
+    /**
+     * Get the authenticated User
+     *
+     * @return JsonResponse
+     */
+    public function me()
+    {
+        $me = $this->guard()->user();
+
+        return [
+            'message' => 'User found',
+            'payload' => $me,
+            'status'  => Constants::STATUS_CODE_SUCCESS
+        ];
+    }
+
+    /**
+     * Refresh a token
+     *
+     * @return JsonResponse
+     */
+    public function refreshToken()
+    {
+        $token = $this->guard()->refresh();
+
+        $tokenDetails = [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $this->guard()->factory()->getTTL() * 60
+        ];
+
+        return [
+            'message' => 'Token refreshed',
+            'payload' => $tokenDetails,
+            'status'  => Constants::STATUS_CODE_SUCCESS
+        ];
+    }
 }

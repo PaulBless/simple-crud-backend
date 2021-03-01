@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ProductContract;
+use Constants;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,6 +27,7 @@ class ProductController extends Controller
 
     public function products(Request $request)
     {
-        return response()->json($this->product->getAllFieldsWithPaginate($request->all()));
+        $result = $this->product->getAllFieldsWithPaginate($request->all());
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 }

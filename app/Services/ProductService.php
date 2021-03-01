@@ -92,21 +92,21 @@ class ProductService implements ProductContract
             $newData['image'] = $data['image'];
             
             if (!empty($data['id'])) {
-                $response = $this->getById($data['id'], ['id']);
-                if ($response['status'] !== Constants::STATUS_CODE_SUCCESS) {
-                    return $response;
+                $result = $this->getById($data['id'], ['id']);
+                if ($result['status'] !== Constants::STATUS_CODE_SUCCESS) {
+                    return $result;
                 } else {
-                    $existingData = $response['payload'];
+                    $existingData = $result['payload'];
                 }
-                $response = $existingData->update($newData);
+                $result = $existingData->update($newData);
             } else {
-                $response = $this->model->create($newData);
+                $result = $this->model->create($newData);
             }
 
-            if ($response) {
+            if ($result) {
                 return [
                     'message' => !empty($data['id']) ? 'Data is successfully updated' : 'Data is successfully saved',
-                    'payload' => $response,
+                    'payload' => $result,
                     'status'  => Constants::STATUS_CODE_SUCCESS
                 ];
             } else {

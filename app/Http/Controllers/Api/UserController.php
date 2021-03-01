@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\UserContract;
+use Constants;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class UserController extends Controller
 {
     /**
      * @var UserContract
@@ -35,7 +36,7 @@ class AuthController extends Controller
     {
         $result = $this->user->handleLogin($request->all());
 
-        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 
     /**
@@ -49,7 +50,7 @@ class AuthController extends Controller
     {
         $result = $this->user->handleSignup($request->all());
 
-        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 
     /**
@@ -63,7 +64,7 @@ class AuthController extends Controller
     {
         $result = $this->user->handleForgetPassword($request->all());
 
-        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 
     /**
@@ -77,6 +78,30 @@ class AuthController extends Controller
     {
         $result = $this->user->handleResetPassword($request->all());
 
-        return response()->json($result, !empty($result['status']) ? $result['status'] : 200);
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
+    }
+
+    /**
+     * Get the authenticated User
+     *
+     * @return JsonResponse
+     */
+    public function me()
+    {
+        $result = $this->user->me();
+
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
+    }
+
+    /**
+     * Refresh a token
+     *
+     * @return JsonResponse
+     */
+    public function refreshToken()
+    {
+        $result = $this->user->refreshToken();
+
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 }
