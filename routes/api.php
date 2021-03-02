@@ -33,8 +33,8 @@ Route::group(['prefix' => 'v1'], function () {
     });
 
     Route::group(['middleware' => ['jwt.verify']], function () {
+        Route::post('/refresh-token', ['App\Http\Controllers\Api\UserController', 'refreshToken'])->name('refresh-token');
         Route::get('/me', ['App\Http\Controllers\Api\UserController', 'me']);
-        Route::post('/refresh-token', ['App\Http\Controllers\Api\UserController', 'refreshToken']);
 
         Route::get('/products', ['App\Http\Controllers\Api\ProductController', 'products']);
         Route::get('/product', ['App\Http\Controllers\Api\ProductController', 'product']);
