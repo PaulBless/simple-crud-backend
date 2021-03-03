@@ -5,6 +5,7 @@ namespace App\Services;
 use Hash;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
+use App\Services\Contracts\ProductContract;
 use App\Services\Contracts\UserContract;
 use Auth;
 use Carbon\Carbon;
@@ -43,6 +44,16 @@ class UserService implements UserContract
     public function guard()
     {
         return Auth::guard();
+    }
+
+    /**
+     * Get the corresponding model
+     * 
+     * @return User 
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -489,5 +500,94 @@ class UserService implements UserContract
             'payload' => $tokenDetails,
             'status'  => Constants::STATUS_CODE_SUCCESS
         ];
+    }
+
+    /**
+     * Get stats
+     * 
+     * @param int $userId
+     * @param string $todayStartDate
+     * @param string $todayEndDate
+     * @param string $thisWeekStartDate
+     * @param string $thisWeekEndDate
+     * @param string $thisMonthStartDate
+     * @param string $thisMonthEndDate
+     * @param bool $getProductData
+     * @return JsonResponse
+     */
+    public function stats(
+        int $userId, 
+        string $todayStartDate = null, 
+        string $todayEndDate = null, 
+        string $thisWeekStartDate = null, 
+        string $thisWeekEndDate = null, 
+        string $thisMonthStartDate = null,
+        string $thisMonthEndDate = null,
+        bool $getProductData = true
+    )
+    {
+        try {
+            if ($todayStartDate) {
+                $todayStartDate = Carbon::parse($todayStartDate)->format('Y-m-d H:i:s');
+            }
+            if ($todayEndDate) {
+                $todayEndDate = Carbon::parse($todayEndDate)->format('Y-m-d H:i:s');
+            }
+            if ($thisWeekStartDate) {
+                $thisWeekStartDate = Carbon::parse($thisWeekStartDate)->format('Y-m-d H:i:s');
+            }
+            if ($thisWeekEndDate) {
+                $thisWeekEndDate = Carbon::parse($thisWeekEndDate)->format('Y-m-d H:i:s');
+            }
+            if ($thisMonthStartDate) {
+                $thisMonthStartDate = Carbon::parse($thisMonthStartDate)->format('Y-m-d H:i:s');
+            }
+            if ($thisMonthEndDate) {
+                $thisMonthEndDate = Carbon::parse($thisMonthEndDate)->format('Y-m-d H:i:s');
+            }
+
+            $data = [];
+
+            if ($getProductData) {
+                $productModel = resolve(ProductContract::class)->getModel();
+                $product = $productModel->where('user_id', $userId);
+
+                $data['product']['total'] = $product->count();
+
+                if ($todayStartDate && $todayEndDate) {
+                    $data['product']['totalToday'] = $product
+                                                            ->where('created_at', '>=', $todayStartDate)
+                                                            ->where('created_at', '<=', $todayEndDate)
+                                                            ->count();
+                }
+
+                if ($thisWeekStartDate && $thisWeekEndDate) {
+                    $data['product']['totalThisWeek'] = $product
+                                                            ->where('created_at', '>=', $thisWeekStartDate)
+                                                            ->where('created_at', '<=', $thisWeekEndDate)
+                                                            ->count();
+                }
+
+                if ($thisMonthStartDate && $thisMonthEndDate) {
+                    $data['product']['totalThisMonth'] = $product
+                                                            ->where('created_at', '>=', $thisMonthStartDate)
+                                                            ->where('created_at', '<=', $thisMonthEndDate)
+                                                            ->count();
+                }
+            }
+
+            return [
+                'message' => 'Stats are fetched Successfully',
+                'payload' => $data,
+                'status'  => Constants::STATUS_CODE_SUCCESS
+            ];
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return [
+                'message' => 'Something went wrong.',
+                'payload' => $th->getMessage(),
+                'status'  => Constants::STATUS_CODE_ERROR
+            ];
+        }
     }
 }

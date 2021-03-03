@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\UserContract;
+use Auth;
 use Constants;
 use Illuminate\Http\Request;
 
@@ -101,6 +102,27 @@ class UserController extends Controller
     public function refreshToken()
     {
         $result = $this->user->refreshToken();
+
+        return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
+    }
+
+    /**
+     * Get stats
+     * 
+     * @param Request $request 
+     * @return JsonResponse 
+     */
+    public function stats(Request $request)
+    {
+        $result = $this->user->stats(
+            Auth::id(),
+            $request->todayStartDate,
+            $request->todayEndDate,
+            $request->thisWeekStartDate,
+            $request->thisWeekEndDate,
+            $request->thisMonthStartDate,
+            $request->thisMonthEndDate
+        );
 
         return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }

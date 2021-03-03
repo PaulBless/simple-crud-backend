@@ -5,6 +5,13 @@ namespace App\Services\Contracts;
 interface UserContract
 {
     /**
+     * Get the corresponding model
+     * 
+     * @return User 
+     */
+    public function getModel();
+
+    /**
      * Handle login
      * 
      * @param array $data 
@@ -62,4 +69,28 @@ interface UserContract
      * @return JsonResponse
      */
     public function refreshToken();
+
+    /**
+     * Get stats
+     * 
+     * @param int $userId
+     * @param string $todayStartDate
+     * @param string $todayEndDate
+     * @param string $thisWeekStartDate
+     * @param string $thisWeekEndDate
+     * @param string $thisMonthStartDate
+     * @param string $thisMonthEndDate
+     * @param bool $getProductData
+     * @return JsonResponse
+     */
+    public function stats(
+        int $userId, 
+        string $todayStartDate = null, 
+        string $todayEndDate = null, 
+        string $thisWeekStartDate = null, 
+        string $thisWeekEndDate = null, 
+        string $thisMonthStartDate = null,
+        string $thisMonthEndDate = null,
+        bool $getProductData = true
+    );
 }

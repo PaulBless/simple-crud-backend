@@ -31,13 +31,23 @@ class ProductService implements ProductContract
     }
 
     /**
-     * Get all fields
+     * Get the corresponding model
+     * 
+     * @return Product 
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+
+    /**
+     * Get all
      * 
      * @param int $userId
      * @param array $select
      * @return array 
      */
-    public function getAllFields(int $userId, array $select = ['*'])
+    public function getAll(int $userId, array $select = ['*'])
     {
         try {
             $result = $this->model->select($select)->get();
@@ -236,14 +246,14 @@ class ProductService implements ProductContract
     }
 
     /**
-     * Get all fields with paginate
+     * Get all with paginate
      * 
      * @param int $userId
      * @param array $data
      * @param array $select
      * @return array 
      */
-    public function getAllFieldsWithPaginate(int $userId, array $data, array $select = ['*'])
+    public function getAllWithPaginate(int $userId, array $data, array $select = ['*'])
     {
         try {
             $params = !empty($data['params']) ? json_decode($data['params']) : null;
@@ -261,7 +271,7 @@ class ProductService implements ProductContract
                 $sortType = 'desc';
             }
             
-            $result = $this->model->select($select)->orderBy($sortBy, $sortType);
+            $result = $this->model->where('user_id', $userId)->select($select)->orderBy($sortBy, $sortType);
 
             if ($params && !empty($params->keyword) && $params->keyword !== '') {
                 $searchQuery = $params->keyword;

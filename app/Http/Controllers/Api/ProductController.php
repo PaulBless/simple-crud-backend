@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function products(Request $request)
     {
-        $result = $this->product->getAllFieldsWithPaginate(Auth::id(), $request->all());
+        $result = $this->product->getAllWithPaginate(Auth::id(), $request->all());
         return response()->json($result, !empty($result['status']) ? $result['status'] : Constants::STATUS_CODE_SUCCESS);
     }
 

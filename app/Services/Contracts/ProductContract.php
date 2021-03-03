@@ -5,13 +5,20 @@ namespace App\Services\Contracts;
 interface ProductContract
 {
     /**
-     * Get all fields
+     * Get the corresponding model
+     * 
+     * @return Product 
+     */
+    public function getModel();
+
+    /**
+     * Get all
      * 
      * @param int $userId
      * @param array $select
      * @return array 
      */
-    public function getAllFields(int $userId, array $select = ['*']);
+    public function getAll(int $userId, array $select = ['*']);
 
     /**
      * Store/update data
@@ -33,14 +40,14 @@ interface ProductContract
     public function getById(int $userId, int $id, array $select = ['*']);
 
     /**
-     * Get all fields with paginate
+     * Get all with paginate
      * 
      * @param int $userId
      * @param array $data
      * @param array $select
      * @return array 
      */
-    public function getAllFieldsWithPaginate(int $userId, array $data, array $select = ['*']);
+    public function getAllWithPaginate(int $userId, array $data, array $select = ['*']);
 
     /**
      * Delete data by id array
