@@ -1,8 +1,7 @@
 <h1 align="center">Simple Crud Backend</h1>
 
 <p align="center">
-    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/react-17.0.1-blue" alt="react 17.0.1"></a>
-    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/antd-4.13.0-9cf" alt="antd 4.13.0"></a>
+    <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/laravel-8.12-orange" alt="laravel 8.12"></a>
     <a href="https://github.com/arifszn/simple-crud-backend/blob/main/LICENSE"><img src="https://img.shields.io/github/license/arifszn/simple-crud-backend"/></a>
     <a href="https://arifszn.github.io/"><img src="https://img.shields.io/badge/maintainer-arifszn-informational" alt="Maintainer arifszn"/></a>
 </p>
@@ -13,6 +12,7 @@ An API based backend built with Laravel. Powers <a href="https://github.com/arif
 ## Table of Contents
 
 * [Screenshots](#screenshots)
+* [Requirements](#requirements)
 * [Installation](#installation)
 * [License](#license)
 
@@ -33,6 +33,10 @@ An API based backend built with Laravel. Powers <a href="https://github.com/arif
 ![New Product](https://raw.githubusercontent.com/arifszn/simple-crud/main/public/assets/img/screenshots/3.png)
 <br />
 <br />
+
+# Requirements
+
+* PHP ^7.3|^8.0
 
 
 # Installation
