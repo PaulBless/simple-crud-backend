@@ -21,5 +21,21 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/artisan/{cmd}', function ($cmd) {
+    if (env('APP_ENV') !== 'production') {
+        try {
+            Artisan::call($cmd);
+
+            return response()->json([
+                'message' => 'Command successfully completed',
+                'payload' => null,
+                'status'  => Constants::STATUS_CODE_SUCCESS
+            ]); 
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
+});
+
 //log viewer
 Route::get('system-logs', ['\Rap2hpoutre\LaravelLogViewer\LogViewerController', 'index']);
