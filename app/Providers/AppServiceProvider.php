@@ -8,6 +8,7 @@ use App\Services\ProductService;
 use App\Services\UserService;
 use Config;
 use Illuminate\Support\ServiceProvider;
+use Schema;
 use Str;
 use URL;
 
@@ -34,5 +35,7 @@ class AppServiceProvider extends ServiceProvider
         if (Str::contains(Config::get('app.url'), 'https://')) {
             URL::forceScheme('https');
         }
+        
+        Schema::defaultStringLength(191);
     }
 }
