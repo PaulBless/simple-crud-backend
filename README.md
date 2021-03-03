@@ -11,10 +11,23 @@ An API based backend built with Laravel. Powers <a href="https://github.com/arif
 
 ## Table of Contents
 
+* [Demo](#demo)
 * [Screenshots](#screenshots)
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [License](#license)
+
+
+## Demo ##
+
+Click [here](https://simplecrud.arifszn.com) for Demo Site <br />
+
+```
+Demo User
+Email: john@doe.com
+Password: 12345
+```
+
 
 # Screenshots
 
