@@ -555,21 +555,21 @@ class UserService implements UserContract
                 $data['product']['total'] = $product->count();
 
                 if ($todayStartDate && $todayEndDate) {
-                    $data['product']['totalToday'] = $product
+                    $data['product']['totalToday'] = (clone $product)
                                                             ->where('created_at', '>=', $todayStartDate)
                                                             ->where('created_at', '<=', $todayEndDate)
                                                             ->count();
                 }
 
                 if ($thisWeekStartDate && $thisWeekEndDate) {
-                    $data['product']['totalThisWeek'] = $product
+                    $data['product']['totalThisWeek'] = (clone $product)
                                                             ->where('created_at', '>=', $thisWeekStartDate)
                                                             ->where('created_at', '<=', $thisWeekEndDate)
                                                             ->count();
                 }
 
                 if ($thisMonthStartDate && $thisMonthEndDate) {
-                    $data['product']['totalThisMonth'] = $product
+                    $data['product']['totalThisMonth'] = (clone $product)
                                                             ->where('created_at', '>=', $thisMonthStartDate)
                                                             ->where('created_at', '<=', $thisMonthEndDate)
                                                             ->count();
