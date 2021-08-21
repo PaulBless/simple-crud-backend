@@ -3,22 +3,12 @@
 <p align="center">
     <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/laravel-8.12-orange" alt="laravel 8.12"></a>
     <a href="https://github.com/arifszn/simple-crud-backend/blob/main/LICENSE"><img src="https://img.shields.io/github/license/arifszn/simple-crud-backend"/></a>
-    <a href="https://arifszn.github.io/"><img src="https://img.shields.io/badge/maintainer-arifszn-informational" alt="Maintainer arifszn"/></a>
 </p>
 
 An API based backend built with Laravel. Powers <a href="https://github.com/arifszn/simple-crud">Simple Crud</a> which is a crud based single page application.
 
 
-## Table of Contents
-
-* [Demo](#demo)
-* [Screenshots](#screenshots)
-* [Requirements](#requirements)
-* [Installation](#installation)
-* [License](#license)
-
-
-## Demo ##
+## Demo
 
 Click [here](https://simplecrud.arifszn.com) for Demo Site <br />
 
@@ -29,7 +19,7 @@ Password: 12345
 ```
 
 
-# Screenshots
+## Screenshots
 
 ![Dashboard](https://raw.githubusercontent.com/arifszn/simple-crud/main/public/assets/img/screenshots/1.png)
 <br />
@@ -47,12 +37,12 @@ Password: 12345
 <br />
 <br />
 
-# Requirements
+## Requirements
 
 * PHP ^7.3|^8.0
 
 
-# Installation
+## Installation
 
 - Run ```git clone https://github.com/arifszn/simple-crud-backend.git```
 - Run ```cd simple-crud-backend```
